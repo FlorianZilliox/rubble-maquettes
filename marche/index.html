@@ -1,0 +1,44 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rubble · la nouvelle marche</title><style>
+:root{color-scheme:dark}body{margin:0;background:#140c0c;color:#f3e6c4;font:16px/1.4 system-ui,sans-serif}
+header{padding:16px}h1{font-size:20px;margin:0 0 6px}p{margin:0 16px 10px;color:#c9b9a0;font-size:14px}
+canvas{display:block;width:100%;max-width:100%;height:auto}html,body{overflow-x:hidden}h2{font-size:15px;margin:18px 16px 8px}
+.boutons{display:flex;gap:8px;margin:0 16px 10px}.boutons button{font:inherit;font-size:14px;padding:8px 12px;border-radius:8px;border:0;background:#f3e6c4;color:#140c0c;font-weight:700}
+</style></head><body><header><h1>Rubble · le nouveau sprite et sa marche</h1></header>
+<p>Le duo de la maquette 9 (jambes courtes, plus kawaii), dessiné moins pixellisé dans la lumière de l'écran 10, animé par Gemini Omni puis découpé : 28 images, deux petits pas, joué à sa cadence réelle (24 images par seconde, un cycle en 1,17 s).</p>
+<h2>1 · Sur l'écran 10, à la taille de la maquette</h2><canvas id="c1"></canvas>
+<div class="boutons"><button id="lent">Ralenti ×¼</button><button id="normal">Vitesse réelle</button></div>
+<h2>2 · Sur place, en grand</h2><canvas id="c2"></canvas>
+<script>
+const planche = new Image(), ecran = new Image(), sol = new Image();
+const CW = 156, CH = 208, N = 28, AX = 78, AY = 204, TOUR = 68, IPS = 24;   // la planche : 28 cases de 156 × 208, ancre aux pieds ; 68 px d'avance par cycle
+let vitesse = 1;
+document.getElementById('lent').onclick = () => vitesse = 0.25; document.getElementById('normal').onclick = () => vitesse = 1;
+function toile(id, w, h) { const c = document.getElementById(id), d = Math.min(3, devicePixelRatio || 1); c.width = w * d; c.height = h * d; const g = c.getContext('2d'); g.scale(d, d); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high'; return g; }
+function poser(g, k, x, y, h, dir) {           // la case k, pieds en (x, y), hauteur h, tournée vers dir
+  const e = h / CH; g.save(); g.translate(x, y); if (dir < 0) g.scale(-1, 1);
+  g.drawImage(planche, k * CW, 0, CW, CH, -AX * e, -AY * e, CW * e, CH * e); g.restore();
+}
+let t0 = null, x = 40, dir = 1, avant = 0, phase = 0;
+function boucle(t) {
+  requestAnimationFrame(boucle); if (t0 === null) t0 = t; const dt = Math.min(0.05, (t - (avant || t)) / 1000) * vitesse; avant = t;
+  phase += dt * IPS; const k = Math.floor(phase) % N;
+  // 1 : sur l'écran 10, à l'échelle de la maquette (le duo d'environ 270 px sur 1024 → 26 % de la largeur), marchant sur une corniche
+  const W1 = 390, H1 = Math.round(W1 * 1536 / 1024), g1 = toile('c1', W1, H1), k1 = W1 / 1024;
+  g1.drawImage(ecran, 0, 0, W1, H1);
+  const hDuo = 245 * k1, solY = 1385 * k1;   // le sol de la corniche du bas à droite de l'écran 10
+  g1.fillStyle = 'rgba(20,12,12,.0)';
+  const pxParS = TOUR / (N / IPS) * (hDuo / CH);   // la vitesse qui correspond aux pieds (aucun patinage)
+  x += dir * pxParS * dt; const g0 = 690 * k1 + hDuo * 0.25, d0 = 845 * k1;
+  if (x > d0) { x = d0; dir = -1; } if (x < g0) { x = g0; dir = 1; }
+  if (x < g0) x = g0;
+  poser(g1, k, x, solY, hDuo, dir);
+  // 2 : sur place, en grand, sur une bande de sol de l'écran 10
+  const W2 = 390, H2 = 300, g2 = toile('c2', W2, H2);
+  const gr = g2.createLinearGradient(0, 0, 0, H2); gr.addColorStop(0, '#5a2a2a'); gr.addColorStop(1, '#c86a3a'); g2.fillStyle = gr; g2.fillRect(0, 0, W2, H2);
+  const solY2 = H2 - 60; g2.fillStyle = '#3b2a22'; g2.fillRect(0, solY2, W2, H2 - solY2); g2.fillStyle = '#7d8a2c'; g2.fillRect(0, solY2, W2, 6); g2.fillStyle = '#a7b23c'; g2.fillRect(0, solY2, W2, 2);
+  poser(g2, k, W2 / 2, solY2 + 4, 220, 1);
+}
+let charge = 0; [planche, ecran].forEach((im) => im.onload = () => { if (++charge === 2) requestAnimationFrame(boucle); });
+planche.src = 'marche.png'; ecran.src = 'ecran10.jpg';
+</script></body></html>
