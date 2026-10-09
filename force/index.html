@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La force du sceptre</title>
+<style>
+:root { --fond: #121216; --carte: #1d1d23; --texte: #ecebe6; --doux: #9a9aa6; --accent: #e8b84a; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px 16px 60px; background: var(--fond); color: var(--texte); font: 16px/1.5 -apple-system, system-ui, sans-serif; }
+main { max-width: 1400px; margin: 0 auto; }
+h1 { font-size: 24px; margin: 0 0 6px; }
+.demande { color: var(--doux); margin: 0 0 14px; }
+.bloc { background: var(--carte); border-radius: 10px; padding: 12px 16px; margin: 10px 0; }
+.bloc b { color: var(--accent); }
+.reco { border-left: 4px solid var(--accent); }
+.grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 660px), 1fr)); gap: 16px; margin-top: 18px; }
+.option { background: var(--carte); border-radius: 10px; padding: 12px; }
+.option.entorse { box-shadow: 0 0 0 2px #ffd23f; }
+.hors { margin: -2px 0 10px; font-size: 13px; line-height: 1.45; color: #ffd23f; }
+.hors b { letter-spacing: .06em; }
+.option header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.numero { flex: none; min-width: 52px; height: 52px; padding: 0 10px; border-radius: 26px; display: grid; place-items: center;
+  background: var(--accent); color: #121216; font-size: 30px; font-weight: 900; }
+.vue video, .vue img { display: block; width: 100%; max-width: 640px; height: auto; image-rendering: pixelated; image-rendering: crisp-edges; background: #000; border-radius: 4px; }
+.vide { height: 200px; display: grid; place-items: center; color: var(--doux); border: 1px dashed var(--doux); border-radius: 4px; }
+.legende { font-size: 17px; }
+.pied { color: var(--doux); margin-top: 24px; }
+</style></head>
+<body><main>
+<h1>La force du sceptre</h1>
+<p class="demande">« Le jeu est soumis aux lois de la physique… les poussées et les tractions qu'ils exercent sur des éléments du décor en métal peuvent les déplacer… on joue sur la verticalité » (Florian, 09/10). La salle du vol, en blocs : un bouclier tombé à plat (barre bleue) sous les frères ; le pousser les lance en haut et en avant, vers la corniche suivante. Quelle force pour le sceptre ?</p>
+<div class="bloc reco">Ma recommandation : 3 — le vol se voit et se dose : sur la première corniche, 9 gestes sur 60 réussissent au premier coup (3 à ×1,5) ; à ×3, les poussées trop fortes les envoient trop haut et la retombée les blesse</div>
+<div class="bloc">Ce que je ne sais pas trancher : Le ressenti du doigt : seul ton essai sur le téléphone le dira. Après ton choix, la même force vaudra pour tirer et pour pousser, dans tous les niveaux (la constance).</div>
+<div class="grille">
+<section class="option"><header><span class="numero">1</span><span class="legende">×1 — la force d'aujourd'hui : la poussée à fond les lève d'une case, ils retombent (aucune montée possible)</span></header><div class="vue"><video src="medias/1-1-force-1.mp4" autoplay loop muted playsinline></video></div></section>
+<section class="option"><header><span class="numero">2</span><span class="legende">×1,5 — ils montent juste d'une corniche : il faut pousser fort et longtemps</span></header><div class="vue"><video src="medias/2-2-force-1-5.mp4" autoplay loop muted playsinline></video></div></section>
+<section class="option"><header><span class="numero">3</span><span class="legende">×2 — un vrai envol, qu'on dose : trop peu ils retombent, trop ils passent par-dessus</span></header><div class="vue"><video src="medias/3-3-force-2.mp4" autoplay loop muted playsinline></video></div></section>
+<section class="option"><header><span class="numero">4</span><span class="legende">×3 — un envol puissant : une petite poussée suffit, une grande les envoie haut (et la retombée fait mal)</span></header><div class="vue"><video src="medias/4-4-force-3.mp4" autoplay loop muted playsinline></video></div></section>
+</div>
+<p class="pied">Les films tournent en boucle, à vitesse réelle, sans son. Réponds par numéros.</p>
+</main></body></html>
